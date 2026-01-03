@@ -1,16 +1,11 @@
-// ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import TextField from '@mui/material/TextField';
-
-// ** Demo Components Imports
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Button from '@mui/material/Button';
-import SearchIcon from '@mui/icons-material/Search'; // Import icon tìm kiếm (hoặc sử dụng biểu tượng tìm kiếm tùy chọn)
+import SearchIcon from '@mui/icons-material/Search'; 
 import React, { useState, useEffect } from 'react';
-
-//redux
 import { useDispatch } from 'react-redux';
 import { getOrdersByUser } from 'api/orderApi';
 import TableOrderHis from './TableOrderHis';
@@ -25,14 +20,13 @@ function OrderHis() {
 
     useEffect(() => {
         search(false);
-        // dispatch(addCallback(ORDER_SEARCH, search))
     }, []);
 
     const search = async (showMsgNodata = true) => {
         try {
 
             const keySearch = User_Side_Enum.USER + "|" + textSearch
-            const userName = (Auth && Auth.getUserDetails() && Auth.getUserDetails().user_Name) ?? ""
+            const userName = (Auth && Auth.getUserDetails() && Auth.getUserDetails().userId) ?? ""
 
             getOrdersByUser(userName, keySearch).then((data) => {
                 console.log(`getOrdersByUser=${JSON.stringify(data)}`);

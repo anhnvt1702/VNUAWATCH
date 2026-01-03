@@ -13,7 +13,7 @@ class BestSeller extends Component {
   }
 
   render() {
-    const { products, departments } = this.state;
+    const { products, brands } = this.state;
 
     return (
       <div className="best_sellers">

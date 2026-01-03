@@ -1,7 +1,7 @@
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { constHostAddressConfig } from "./commonData";
 
-import { ProcessMsgNewOrder, ProcessMsgStockTotal, ProcessMsgBoardInfo, ProcessMsgMoneyType, ProcessPeriodRemain, ProcessMsgCurrentTime, ProcessMsgMarketInfos, ProcessMsgReload } from './processMsgHelper';
+import { ProcessMsgNewOrder,  ProcessMsgReload } from './processMsgHelper';
 
 export const wsMsgType = {
     MsgNewOrder: "NO",
@@ -29,11 +29,8 @@ const connectWS = () => {
 
         wsClient.onopen = () => {
             console.log("WS Connected-", new Date());
-            // sendMessage(`${wsMsgType.Req_Header}*${wsMsgType.Req_CurrentTime}`);
-            // sendMessage(`${wsMsgType.Req_Header}*${wsMsgType.Req_InitData}`);
         };
         wsClient.onmessage = (evt) => {
-            // console.log(evt.data);
             OnReceiveMessage(evt.data);
         };
         wsClient.onerror = (evt) => {
@@ -57,7 +54,6 @@ export const sendMessage = (message) => {
     }
 };
 
-// Xu ly msg nhan dc
 const OnReceiveMessage = (rawMessage) => {
     const msgType = rawMessage.split('~')[0];
     const msg = rawMessage.split('~')[1];

@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { login } from "../../ServerRequest";
-import API from "../../myAxios/API";
 import Auth from "../../modules/Auth";
 import HomeBanner from "../../components/HomeBanner";
 import CategoryBanner from "../../components/CategoryBanner/CategoryBanner";
@@ -8,8 +6,6 @@ import NewArrivals from "../../components/Products/NewArrivals";
 import BestSeller from "../../components/Products/BestSeller";
 import Benefit from "../../components/Benefit";
 import Advertisement from "../../components/Advertisement";
-import PropTypes from "prop-types";
-import jumpTo from "../../modules/Navigation";
 import LoginRegister from "../../components/LoginRegisterModal";
 
 class Home extends Component {
@@ -57,7 +53,7 @@ class Home extends Component {
   };
 
   render() {
-    const { products, departments } = this.props;
+    const { products, brands } = this.props;
     return (
       <div>
         <HomeBanner />
@@ -65,7 +61,7 @@ class Home extends Component {
         {products ? (
           <NewArrivals
             products={products}
-            departments={departments}
+            brands={brands}
             addToBag={this.addToBag}
           />
         ) : null}
@@ -74,7 +70,7 @@ class Home extends Component {
         {products ? (
           <BestSeller
             products={products}
-            departments={departments}
+            brands={brands}
             addToBag={this.addToBag}
           />
         ) : null}

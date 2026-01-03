@@ -10,7 +10,6 @@ import { DateTimeDisplay_1, formatNumberWithCommas } from "utils/commonFunction"
 
 
 function Tracking() {
-
   const [order, setOrder] = useState(orderInfo)
   const allcodes = useSelector(state => state.AllcodeReducer.data);
   const reloadTrackingOrder = useSelector(state => state.gShare.reloadTrackingOrder);
@@ -135,15 +134,6 @@ function Tracking() {
                   <strong>{formatNumberWithCommas(order.total_Order_Value)} VNĐ</strong>
                 </li>
               </ul>
-              {/* 
-              <form className="card p-2">
-                <div className="input-group">
-                  <input type="text" className="form-control" placeholder="Nhập mã giảm giá" />
-                  <div className="input-group-append">
-                    <button type="button" className="btn btn-secondary">Áp dụng</button>
-                  </div>
-                </div>
-              </form> */}
             </div>
             <div className="col-md-7 order-md-1">
               <h4 className="mb-3">Thông tin khách hàng</h4>

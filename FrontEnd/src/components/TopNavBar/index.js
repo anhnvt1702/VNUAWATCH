@@ -1,115 +1,113 @@
-import { withRouter } from 'react-router-dom';
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import LoginRegister from "../LoginRegisterModal";
-
 import Auth from "../../modules/Auth";
 
 class TopNavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.registerclicked = this.registerclicked.bind(this);
-    this.state = {
-      modalShow: false,
-      login: 1
-    };
-  }
-  showHideModal = () => {
-    this.setState({ modalShow: false });
+  state = {
+    modalShow: false,
+    login: 1
   };
 
-  loginclicked = () => {
+  showLogin = () => {
     this.setState({ modalShow: true, login: 1 });
   };
-  registerclicked = () => {
+
+  showRegister = () => {
     this.setState({ modalShow: true, login: 0 });
+  };
+
+  hideModal = () => {
+    this.setState({ modalShow: false });
   };
 
   logout = (e) => {
     e.preventDefault();
     Auth.logout();
-    // window.location.reload();
-    this.props.history.push('/');
+    this.props.history.push("/");
   };
+
+  renderAccountMenu() {
+    const user = Auth.getUserDetails();
+    const isLoggedIn =
+      user && Object.keys(user).length !== 0;
+
+    if (isLoggedIn) {
+      return (
+        <li className="account">
+          <a href="#!" className="account-toggle">
+            <i className="fa fa-user-circle mr-1"></i>
+            {user.user_Name}
+            <i className="fa fa-angle-down ml-1"></i>
+          </a>
+          <ul className="account-dropdown">
+            <li>
+              <a href="#!" onClick={this.logout}>
+                <i className="fas fa-sign-out-alt mr-2"></i>
+                Đăng xuất
+              </a>
+            </li>
+          </ul>
+        </li>
+      );
+    }
+
+    return (
+      <li className="account">
+        <a href="#!" className="account-toggle">
+          <i className="fa fa-user mr-1"></i>
+          Tài khoản
+          <i className="fa fa-angle-down ml-1"></i>
+        </a>
+        <ul className="account-dropdown">
+          <li>
+            <a href="#!" onClick={this.showLogin}>
+              <i className="fas fa-sign-in-alt mr-2"></i>
+              Đăng nhập
+            </a>
+          </li>
+          <li>
+            <a href="#!" onClick={this.showRegister}>
+              <i className="fa fa-user-plus mr-2"></i>
+              Đăng ký
+            </a>
+          </li>
+        </ul>
+      </li>
+    );
+  }
 
   render() {
     return (
-      <div className={`top_nav ${this.props.className}`}>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="top_nav_left">
-                Miễn phí ship
+      <>
+        <div className={`top_nav ${this.props.className || ""}`}>
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-md-6">
+                <div className="top_nav_left">
+                  🚚 Miễn phí ship toàn quốc
+                </div>
               </div>
-            </div>
-            <div className="col-md-6 text-right">
-              <div className="top_nav_right">
+
+              <div className="col-md-6 text-right">
                 <ul className="top_nav_menu">
-                  {/* {console.log(Auth.getUserDetails()) }
-                  {console.log(Object.keys(Auth.getUserDetails()).length !== 0)} */}
-                  {Auth.getUserDetails() !== undefined &&
-                    Auth.getUserDetails() !== null &&
-                    Object.keys(Auth.getUserDetails()).length !== 0 ? (
-                    <li className="account">
-                      <a href="#">
-                        {`${Auth.getUserDetails().user_Name}`}
-                        <i className="fa fa-angle-down"></i>
-                      </a>
-                      <ul className="account_selection">
-                        <li>
-                          <a href="#" onClick={(e) => this.logout(e)}>
-                            <i
-                              className="fas fa-sign-in-alt"
-                              aria-hidden="true"
-                            ></i>
-                            Thoát
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  ) : (
-                    <li className="account">
-                      <a href="#">
-                        Tài khoản
-                        <i className="fa fa-angle-down"></i>
-                      </a>
-                      <ul className="account_selection">
-                        <li>
-                          <a href="#" onClick={() => this.loginclicked()}>
-                            <i
-                              className="fas fa-sign-in-alt"
-                              aria-hidden="true"
-                            ></i>
-                            Đăng nhập
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" onClick={() => this.registerclicked()}>
-                            <i
-                              className="fa fa-user-plus"
-                              aria-hidden="true"
-                            ></i>
-                            Đăng ký
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  )}
+                  {this.renderAccountMenu()}
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        {this.state.modalShow ? (
+
+        {this.state.modalShow && (
           <LoginRegister
             show={this.state.modalShow}
             login={this.state.login}
-            registerclicked={this.registerclicked}
-            loginclicked={this.loginclicked}
-
-            onHide={() => this.showHideModal()}
+            loginclicked={this.showLogin}
+            registerclicked={this.showRegister}
+            onHide={this.hideModal}
           />
-        ) : null}
-      </div>
+        )}
+      </>
     );
   }
 }

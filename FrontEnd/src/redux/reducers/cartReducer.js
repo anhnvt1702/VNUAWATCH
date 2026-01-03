@@ -8,6 +8,8 @@ import {
   ADD_TO_CART,
   RESTORE_CART_LOCALSTORAGE,
   REMOVE_FROM_CART,
+  CLEAR_CART,
+  CHANGE_CART_ITEM_QTY,
 } from "../actions/cartAction";
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
   totalItems: 0,
   totalPrice: 0
 };
+
 const calculateTotalPrice = (cartItems) => {
   return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 };
@@ -60,6 +63,24 @@ export default (state = initialState, action) => {
         loading: false,
         error: action.payload.error.response.data,
       };
+      case CHANGE_CART_ITEM_QTY: {
+      const { productId, delta } = action.payload;
+
+      let updatedCart = state.cartItems.map((item) =>
+        item.productId === productId
+          ? { ...item, quantity: item.quantity + delta }
+          : item
+      );
+
+      updatedCart = updatedCart.filter((it) => it.quantity > 0);
+
+      return {
+        ...state,
+        cartItems: updatedCart,
+        totalItems: updatedCart.length,
+        totalPrice: calculateTotalPrice(updatedCart),
+      };
+    }
     case REMOVE_FROM_CART:
       console.log(`REMOVE_FROM_CART=${JSON.stringify()}`);
       var id = action.payload.productId;
@@ -67,15 +88,18 @@ export default (state = initialState, action) => {
       const DataAferRemove =
         state && state.cartItems && Array.isArray(state.cartItems)
           ? state.cartItems.filter(
-              (item) => item.productId != action.payload.productId
+              (item) => item.productId !== action.payload.productId
             )
           : null;
       console.log(`DataAferRemove=${JSON.stringify(DataAferRemove.length)}`);
       return {
         ...state,
         cartItems: DataAferRemove,
-        totalItems: DataAferRemove?.length || 0, // Tính tổng số sản phẩm
+        totalItems: DataAferRemove?.length || 0, 
       };
+
+      
+
     case ADD_TO_CART: {
       console.log("Thêm sản phẩm:", action.payload);
       const existingItem = state.cartItems.find(
@@ -105,7 +129,13 @@ export default (state = initialState, action) => {
         totalPrice: calculateTotalPrice(updatedCart),
       };
     }
-
+    case CLEAR_CART:
+  return {
+    ...state,
+    cartItems: [],
+    totalItems: 0,
+    totalPrice: 0
+  };
     case RESTORE_CART_LOCALSTORAGE:
       if (action.payload) {
         return action.payload;

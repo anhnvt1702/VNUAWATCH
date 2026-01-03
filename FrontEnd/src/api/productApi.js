@@ -4,7 +4,7 @@ import API from "../myAxios/API";
 export function getProductById(c) {
   return API({
     method: "GET",
-    url: `/product/get-by-id?p_product_id=${c}`, // <-- chỗ đang bị sai key
+    url: `/product/get-by-id?p_product_id=${c}`, 
   }).then((res) => {
     return res.data;
   }).catch((error) => {

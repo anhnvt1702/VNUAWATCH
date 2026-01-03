@@ -1,5 +1,4 @@
 export function DateTimeDisplay_1(dateTime) {
-    // Chuyển đổi chuỗi thời gian sang đối tượng Date
     try {
 
         if (!dateTime) return "";

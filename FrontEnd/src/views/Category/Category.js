@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import SingleProduct from "../../components/Products/SingleProduct";
-import Auth from "../../modules/Auth";
 import LoginRegister from "../../components/LoginRegisterModal";
 import Filter from "./components/Filter";
 import { useParams, useLocation } from "react-router-dom";
-import { getProductsByCategory } from "redux/actions/productAction";
 import { getProductsByCategoryApi } from "api/categoryApi";
 import { postCart, addToCart } from "redux/actions/cartAction";
 import Pagination from "components/Common/Pagination";
-import commonData from "utils/commonData";
-import { Select } from 'antd';
+import { Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { showToast, SUCCESS, ERROR, WARNING } from "components/Common/CustomToast";
-
+import {
+  showToast,
+  SUCCESS,
+} from "components/Common/CustomToast";
 
 const { Option } = Select;
 
@@ -30,36 +29,41 @@ function Category() {
   const [listOptions, setListOptions] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [listOrderBy, setListOrderBy] = useState([]);
-  const [orderBy, setOrderBy] = useState('');
+  const [orderBy, setOrderBy] = useState("");
 
-  const allcodes = useSelector(state => state.AllcodeReducer.data);
+  const allcodes = useSelector((state) => state.AllcodeReducer.data);
 
   const startIndex = (currentPage - 1) * parseInt(itemsPerPage);
   const endIndex = startIndex + parseInt(itemsPerPage);
 
   useEffect(() => {
-  if (allcodes && allcodes.length > 0) {
-    let _optionRowPerPage = allcodes.filter(item => item.cdName == 'COMMON' && item.cdType == 'ROWPERPAGE');
-    if (_optionRowPerPage && Array.isArray(_optionRowPerPage))
-      _optionRowPerPage = _optionRowPerPage.sort((a, b) => a.lstodr - b.lstodr);
+    if (allcodes && allcodes.length > 0) {
+      let _optionRowPerPage = allcodes.filter(
+        (item) => item.cdName == "COMMON" && item.cdType == "ROWPERPAGE"
+      );
+      if (_optionRowPerPage && Array.isArray(_optionRowPerPage))
+        _optionRowPerPage = _optionRowPerPage.sort(
+          (a, b) => a.lstodr - b.lstodr
+        );
 
-    setListOptions(_optionRowPerPage);
-    setItemsPerPage(_optionRowPerPage[0]?.cdVal);
+      setListOptions(_optionRowPerPage);
+      setItemsPerPage(_optionRowPerPage[0]?.cdVal);
 
-    let _listOrderBy = allcodes.filter(item => item.cdName == 'CATEGORY' && item.cdType == 'ORDERBY');
-    if (_listOrderBy && Array.isArray(_listOrderBy))
-      _listOrderBy = _listOrderBy.sort((a, b) => a.lstodr - b.lstodr);
+      let _listOrderBy = allcodes.filter(
+        (item) => item.cdName == "CATEGORY" && item.cdType == "ORDERBY"
+      );
+      if (_listOrderBy && Array.isArray(_listOrderBy))
+        _listOrderBy = _listOrderBy.sort((a, b) => a.lstodr - b.lstodr);
 
-    setListOrderBy(_listOrderBy);
+      setListOrderBy(_listOrderBy);
 
+      getProducts();
+    }
+  }, [allcodes]);
+
+  useEffect(() => {
     getProducts();
-  }
-}, [allcodes]);
-
-
-  useEffect(()=>{
-    getProducts()
-  }, [orderBy])
+  }, [orderBy]);
 
   const getProducts = () => {
     try {
@@ -68,23 +72,20 @@ function Category() {
         var params = {
           categoryId: categoryId ? categoryId : 0,
           p_order_by: orderBy,
-        }
+        };
 
         getProductsByCategoryApi(params)
-        .then((data) => {
-          setAllProducts(data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+          .then((data) => {
+            setAllProducts(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
-      
-      
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-
+  };
 
   const showHideModal = () => {
     setModalShow(false);
@@ -101,20 +102,8 @@ function Category() {
   };
 
   const addToBag = (product) => {
-    // if (
-    //   Auth.getUserDetails() !== undefined &&
-    //   Auth.getUserDetails() !== null
-    //   //&& Auth.getToken() !== undefined
-    // ) {
-    //   let cart = postCart(product);
-    //   cart.then((res) => {
-    //     console.log(res);
-    //   });
-    // } else {
-    //use cart redux
-    dispatch(addToCart(product))
-    showToast('Thêm vào giỏ hàng thành công', SUCCESS);
-    // }
+    dispatch(addToCart(product));
+    showToast("Thêm vào giỏ hàng thành công", SUCCESS);
   };
 
   const handleOptionClick = (value) => {
@@ -123,7 +112,7 @@ function Category() {
 
   const handlePageChange = (value) => {
     setCurrentPage(value);
-  }
+  };
 
   return (
     <div className="container product_section_container">
@@ -162,19 +151,21 @@ function Category() {
                         <span className="type_sorting_text">Sắp xếp</span>
                         <i className="fa fa-angle-down"></i>
                         <ul className="sorting_type">
-                          {
-                            listOrderBy && Array.isArray(listOrderBy) && listOrderBy.length > 0 && listOrderBy.map((item, index) => {
-                              console.log('render product:', item); 
+                          {listOrderBy &&
+                            Array.isArray(listOrderBy) &&
+                            listOrderBy.length > 0 &&
+                            listOrderBy.map((item, index) => {
+                              console.log("render product:", item);
                               return (
-                                <li key={item.cdVal}
+                                <li
+                                  key={item.cdVal}
                                   className="type_sorting_btn"
-                                  onClick={() => setOrderBy((item.cdVal || ""))}
+                                  onClick={() => setOrderBy(item.cdVal || "")}
                                 >
                                   <span>{item.content}</span>
                                 </li>
-                              )
-                            })
-                          }
+                              );
+                            })}
                         </ul>
                       </li>
                     </ul>
@@ -183,56 +174,85 @@ function Category() {
               </div>
 
               <div className="row">
-                
-                {allProducts && Array.isArray(allProducts) && allProducts.length > 0 ? allProducts.slice(startIndex, endIndex).map((item, index) => {
-                  console.log('render product:', item);                  
-                  return (
-                    <div
-                      className="col-lg-3 col-sm-6"
-                      key={index}
-                      data-aos="zoom-in"
-                    >
-                      <SingleProduct
-                        productItem={item}
-                        addToBag={() => { addToBag(item) }}
-                      />
-                    </div>
-                  );
-                }) : "Không có dữ liệu"}
-
-
+                {allProducts &&
+                Array.isArray(allProducts) &&
+                allProducts.length > 0
+                  ? allProducts
+                      .slice(startIndex, endIndex)
+                      .map((item, index) => {
+                        console.log("render product:", item);
+                        return (
+                          <div
+                            className="col-lg-3 col-sm-6"
+                            key={index}
+                            data-aos="zoom-in"
+                          >
+                            <SingleProduct
+                              productItem={item}
+                              addToBag={() => {
+                                addToBag(item);
+                              }}
+                            />
+                          </div>
+                        );
+                      })
+                  : "Không có dữ liệu"}
               </div>
-              {
-                allProducts && allProducts.length > 0 && (
-                  <div className="row">
-                    <div className="product_sorting_container product_sorting_container_bottom clearfix" style={{ width: "100%" }}>
-
-                      <ul className="product_sorting">
-                        <li>
-                          <span>Hiển thị:</span>
-                          <span className="num_sorting_text">{listOptions && listOptions.length > 0 && listOptions[0].cdVal}</span>
-                          <i className="fa fa-angle-down"></i>
-                          <ul className="sorting_num">
-                            {listOptions && Array.isArray(listOptions) && listOptions.map((item, index) => {
+              {allProducts && allProducts.length > 0 && (
+                <div className="row">
+                  <div
+                    className="product_sorting_container product_sorting_container_bottom clearfix"
+                    style={{ width: "100%" }}
+                  >
+                    <ul className="product_sorting">
+                      <li>
+                        <span>Hiển thị:</span>
+                        <span className="num_sorting_text">
+                          {listOptions &&
+                            listOptions.length > 0 &&
+                            listOptions[0].cdVal}
+                        </span>
+                        <i className="fa fa-angle-down"></i>
+                        <ul className="sorting_num">
+                          {listOptions &&
+                            Array.isArray(listOptions) &&
+                            listOptions.map((item, index) => {
                               return (
-                                <li className="num_sorting_btn" key={item.cdVal}>
-                                  <span onClick={() => handleOptionClick(item.cdVal)}>{item.cdVal}</span>
+                                <li
+                                  className="num_sorting_btn"
+                                  key={item.cdVal}
+                                >
+                                  <span
+                                    onClick={() =>
+                                      handleOptionClick(item.cdVal)
+                                    }
+                                  >
+                                    {item.cdVal}
+                                  </span>
                                 </li>
-                              )
+                              );
                             })}
-                          </ul>
-                        </li>
-                      </ul>
-                      <span className="showing_results">{`Hiển thị ${startIndex + 1}–${endIndex <= (allProducts?.length || 0) ? (endIndex + 1) : allProducts?.length} trên ${allProducts && allProducts.length} sản phẩm`}</span>
+                        </ul>
+                      </li>
+                    </ul>
+                    <span className="showing_results">{`Hiển thị ${
+                      startIndex + 1
+                    }–${
+                      endIndex <= (allProducts?.length || 0)
+                        ? endIndex + 1
+                        : allProducts?.length
+                    } trên ${
+                      allProducts && allProducts.length
+                    } sản phẩm`}</span>
 
-                      <Pagination itemsPerPage={itemsPerPage} data={allProducts} onPageChange={handlePageChange} />
-
-                    </div>
+                    <Pagination
+                      itemsPerPage={itemsPerPage}
+                      data={allProducts}
+                      onPageChange={handlePageChange}
+                    />
                   </div>
-                )
-              }
-
-
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -245,6 +265,6 @@ function Category() {
         onHide={() => this.showHideModal()}
       />
     </div>
-  )
+  );
 }
 export default Category;

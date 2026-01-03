@@ -1,14 +1,19 @@
 export const reviewInfo = {
-  review_Id: 0, // int
+  review_Id: 0, 
   customer_Id: 0,
   customer_Name: "",
-  customer: null, // object Customer, có thể để null hoặc object tương ứng
-
+  customer: null,
   productId: 0,
-  product: null, // object Product, có thể để null hoặc object tương ứng
-
-  rating: 0, // int
-  review_Date: null, // Date object hoặc null
+  product: null, 
+  rating: 0, 
+  review_Date: null, 
   review_Content: "",
-  delete: 0, // decimal
+  delete: 0, 
+};
+
+export const reviewAddInfo = {
+  customer_Id: 0,
+  productId: 0,
+  rating: 0, 
+  review_Content: "",
 };

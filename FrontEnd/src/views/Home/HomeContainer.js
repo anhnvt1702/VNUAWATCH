@@ -1,5 +1,3 @@
-
-
 import {
   getAllProducts,
   applyFilters
@@ -10,7 +8,7 @@ import { postCart } from "../../redux/actions/cartAction";
 
 const mapStoreToProps = state => ({
   products: state.product.products,
-  departments: state.department.departments,
+  brands: state.brand.brands,
   loading: state.product.loading
 });
 const mapDispatchToProps = dispatch => ({

@@ -1,5 +1,3 @@
-
-
 const validate = (value, rules) => {
   let isValid = true;
 

@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import DEALOFWEEK from "../../assets/images/rolex.jpg";
+import DEALOFWEEK from "../../assets/images/sale_watch.jpg";
 class Advertisement extends Component {
   constructor(props) {
     super(props);

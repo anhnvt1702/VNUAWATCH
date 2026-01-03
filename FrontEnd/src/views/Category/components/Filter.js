@@ -8,17 +8,17 @@ function Filter({categoryId}) {
   return (
     <div className="sidebar_section">
       <div className="sidebar_title">
-        <h5>Loại mũ bảo hiểm</h5>
+        <h5>Phân loại đồng hồ</h5>
       </div>
       <ul className="sidebar_categories">
         {categories && categories.map((ct, index) => {
           return (
-            <li className={ct.category_Id == categoryId ? "active" : ""} key={ct.category_Id}> 
-              <a href={`/trang-chu/danh-muc/${ct.category_Id}`}>
+            <li className={ct.categoryId == categoryId ? "active" : ""} key={ct.categoryId}> 
+              <a href={`/trang-chu/danh-muc/${ct.categoryId}`}>
                 <span>
                   <i className="fa fa-angle-double-right" aria-hidden="true"></i>
                 </span>
-                {ct.category_Name}
+                {ct.categoryName}
               </a>
             </li>
           );

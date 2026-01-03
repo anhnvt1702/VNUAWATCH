@@ -52,35 +52,14 @@ const NavBar = () => {
 
                   <div className="mega-menu">
                     <div className="mega-menu-wrap">
-                      {/* {categories &&
-                        categories.map((item, index) => {
-                          return (
-                            <div className="mega-menu-content" key={item.category_Id}>
-                              <h5>{item.category_Name}</h5>
-                              <ul className="stander">
-                                {item.categories.split(",").map((i, idx) => {
-                                  return (
-                                    <li key={idx}>
-                                      <a
-                                        href={`/fashion-cube/shops/${item.departmentName}/${i}`}
-                                      >
-                                        {i}
-                                      </a>
-                                    </li>
-                                  );
-                                })}
-                              </ul>
-                            </div>
-                          );
-                        })} */}
                       <div className="mega-menu-content">
                         <h5></h5>
                         <ul className="stander">
                           {categories && categories.map((cate, index) => {
                             return (
                               <li key={index}>
-                                <a href={`/trang-chu/danh-muc/${cate.category_Id}`}>
-                                  {cate.category_Name}
+                                <a href={`/trang-chu/danh-muc/${cate.categoryId}`}>
+                                  {cate.categoryName}
                                 </a>
                               </li>
                             );

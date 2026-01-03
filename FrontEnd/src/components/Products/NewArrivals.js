@@ -10,13 +10,13 @@ class NewArrivals extends Component {
     this.state = {
       products: this.props.products,
       productsBAK: this.props.products,
-      departments: this.props.departments
+      brands: this.props.brands
     };
   }
 
   optionClicked(option) {
     let FilterList = this.state.productsBAK.filter(
-      item => item.department === option
+      item => item.brand === option
     );
     if (FilterList.length > 0) {
       this.setState({ products: FilterList });
@@ -27,7 +27,7 @@ class NewArrivals extends Component {
   }
 
   render() {
-    const { products, departments } = this.state;
+    const { products, brands } = this.state;
 
     return (
       <div className="new_arrivals" data-aos="fade-up">

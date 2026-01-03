@@ -7,13 +7,12 @@ export const orderDetail = {
   quantity: 0,
   price: 0,
   productName: "",
-  img1: "",
-  img1_Data_64: "",
+
 };
 
 export const ordersTracking = {
   order_Id: 0,
-  update_Status_Date: null, // DateTime -> null (hoặc new Date())
+  update_Status_Date: null,
   update_By: "",
   step: "",
   step_Text: "",
@@ -23,8 +22,8 @@ export const ordersTracking = {
 export const orderInfo = {
   order_Id: 0,
   customer_Id: 0,
-  customer: null, // Customer object, có thể null hoặc một object tương ứng
-  order_Date: null, // DateTime tương ứng có thể null hoặc Date object
+  customer: null, 
+  order_Date: null, 
   customer_Name: "",
   address: "",
   city: "",
@@ -35,26 +34,49 @@ export const orderInfo = {
   total_Order_Value: 0,
   order_Status: "",
   order_Status_Text: "",
-  payment: null, // Payment object, có thể null hoặc object tương ứng
-  orderDetails: [], // List<OrderDetail> tương ứng array rỗng hoặc các object OrderDetail
-  orderTrackings: [], // List<OrdersTracking>
+  payment: null, 
+  orderDetails: [], 
+  orderTrackings: [], 
   test: "",
   track_Id: "",
 };
 
 export const productInfo = {
-  productId: 0, // int
-  productName: "",
-  description: "",
-  price: 0, // decimal
-  stockQuantity: 0, // int
-  category_Id: 0, // int
-  category_Name: "",
-  img1path: "",
-  created_By: "",
-  modified_By: "",
-  created_Date: null, // DateTime -> JS Date object hoặc null
-  modified_Date: null,
+  productId: 0,
+  title: "",
+  price: 0,
+  stockQuantity: 0,
 
-  deleted: 0, // decimal
+  brand: {
+    brandId: 0,
+    name: "",
+    origin: "",
+  },
+
+  category: {
+    categoryId: 0,
+    categoryName: "",
+    description: "",
+  },
+
+  specification: {
+    series: "",
+    movementType: "",
+    displayType: "",
+    waterResistance: "",
+    caseSizeMm: 0,
+    caseThicknessMm: 0,
+    caseShape: "",
+    caseColor: "",
+    caseMaterial: "",
+    dialColor: "",
+    dialStyle: "",
+    glassMaterial: "",
+    strapMaterial: "",
+    style: "",
+    design: "",
+    utilities: "",
+  },
+
+  images: [],
 };

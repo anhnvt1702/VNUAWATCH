@@ -1,4 +1,3 @@
-// categoryApi.js
 import API from "../myAxios/API";
 
 export function getReviewByProductId(p_product_id) {
@@ -19,7 +18,7 @@ export function getReviewByProductId(p_product_id) {
 export function addReview(data) {
   return API({
     method: "POST",
-    url: `api/user-side/review/insert`,
+    url: `/review/create`,
     data:data,
   }).then((res) => {
     return res.data;

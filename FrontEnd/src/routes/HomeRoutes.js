@@ -1,18 +1,11 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-
-// Layout Types
 import BaseLayout from "../layouts/BaseLayout";
-
-// Route Views
 import Home from "../views/Home/HomeContainer";
-import SingleProductContainer from "../views/Product/SingleProductContainer";
-import CategoryContainer from "../views/Category/CategoryContainer";
 import Category from "../views/Category/Category";
 import Checkout from "views/Order/CheckOut";
 import Tracking from "views/Order/Tracking";
 import ProductDetail from "views/Product/ProductDetail";
 import Account from "views/Account/Account";
+
 
 var routes = [
   {
@@ -56,6 +49,7 @@ var routes = [
     exact: true,
     component: Account,
   },
+
 ];
 
 export default routes;

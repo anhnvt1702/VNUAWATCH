@@ -1,8 +1,5 @@
-// ** React Imports
 import React from 'react'
 import { useState } from 'react'
-
-// ** MUI Imports
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -11,53 +8,38 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
-import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
-
 import Tooltip from '@mui/material/Tooltip';
 import { IconButton } from '@mui/material'
-import { Order_Status_Enum } from 'utils/commonData'
+import { getOrderStatusColor, getOrderStatusText} from 'utils/commonData'
 import { DateTimeDisplay_1 } from 'utils/commonFunction'
 import styled from '@emotion/styled'
-import OrderHisDetail from './OrderHisDetail'
+import OrderHisDetail from './OrderHisDetail' 
 
 const columns = [
-  { id: 'order_Date', label: 'Thời gian đặt hàng', minWidth: 170, format: (value) => DateTimeDisplay_1(value) },
-  { id: 'order_Status_Text', label: 'Trạng thái', minWidth: 170, setColor: true },
+  {
+    id: 'orderDate',
+    label: 'Thời gian đặt hàng',
+    minWidth: 170,
+    format: (value) => DateTimeDisplay_1(value),
+  },
+  {
+    id: 'order_Status',
+    label: 'Trạng thái',
+    minWidth: 170,
+    setColor: true,
+    format: (value) => getOrderStatusText(value),
+  },
   { id: 'customer_Name', label: 'Khách hàng', minWidth: 200 },
   { id: 'address', label: 'Địa chỉ', minWidth: 200 },
   { id: 'phone', label: 'SĐT', minWidth: 200 },
-]
+];
 
 
 const CustomTablePagination = styled(TablePagination)({
   padding: '0',
 });
 
-function GetColor_OrderStatus(status) {
-  try {
-    console.log(`status=${JSON.stringify(status)}`);
-
-    var color = "";
-    switch (status) {
-      case Order_Status_Enum.DANG_XU_LY:
-        color = '#e6b800'
-        break;
-      case Order_Status_Enum.DA_HUY_BO:
-        color = 'red'
-        break;
-      case Order_Status_Enum.DA_HOAN_TAT:
-        color = 'green'
-        break;
-      default:
-        color = 'blue'
-        break;
-    }
-    return color
-  } catch (error) {
-    console.error(error)
-  }
-}
 
 function TableOrderHis({ orders }) {
   // ** States
@@ -108,7 +90,7 @@ function TableOrderHis({ orders }) {
 
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          <span style={column.setColor ? { color: GetColor_OrderStatus(row.order_Status) } : {}}>
+                          <span style={column.setColor ? { color: getOrderStatusColor(row.order_Status) } : {}}>
                             {column.format ? column.format(value) : value}
                           </span>
                         </TableCell>

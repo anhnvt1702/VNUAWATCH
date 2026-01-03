@@ -1,7 +1,7 @@
 // store.js
 import thunk from 'redux-thunk';
 import rootReducer from 'redux/reducers/index'; 
-import { configureStore, applyMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
 const saveToLocalStorage = store => next => action => {
   next(action);

@@ -47,6 +47,62 @@ COLOR PALETTE
 /*********************************
 2. Body and some general stuff
 *********************************/
+.top_nav {
+  background: #1e1e1e;
+  color: #fff;
+  font-size: 14px;
+}
+
+.top_nav_left {
+  font-weight: 500;
+}
+
+.top_nav_menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.account {
+  position: relative;
+  display: inline-block;
+}
+
+.account-toggle {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.account-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  display: none;
+  z-index: 1000;
+}
+
+.account:hover .account-dropdown {
+  display: block;
+}
+
+.account-dropdown li {
+  list-style: none;
+}
+
+.account-dropdown a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.account-dropdown a:hover {
+  background: #f5f5f5;
+}
 
 * {
   margin: 0;
@@ -293,19 +349,6 @@ section {
   width: 100%;
   background: #ffffff;
   z-index: 10;
-}
-.top_nav {
-  width: 100%;
-  height: 50px;
-  background: #1e1e27;
-  transition: all 2s linear;
-}
-.top_nav_left {
-  height: 50px;
-  line-height: 50px;
-  font-size: 13px;
-  color: #b5aec4;
-  text-transform: uppercase;
 }
 
 /*********************************

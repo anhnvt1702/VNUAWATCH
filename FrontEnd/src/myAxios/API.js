@@ -12,7 +12,6 @@ const API = (config) => {
       };
     }
 
-    //interceptors handle network error
     axios.interceptors.response.use(
       (response) => {
         return response;
@@ -26,8 +25,6 @@ const API = (config) => {
         }
         if (error.response.status === 401) {
           Auth.logout();
-          //jumpTo("/login");
-          //throw error;
         }
         return Promise.reject(error);
       }

@@ -1,3 +1,23 @@
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #d8d8d8;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.qty-btn:hover {
+  background: #f5f5f5;
+}
+.qty-value {
+  margin: 0 8px;
+  min-width: 24px;
+  text-align: center;
+  font-weight: 500;
+}
 
 
 .fade.right.modal .modal-dialog {

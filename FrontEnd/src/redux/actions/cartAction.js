@@ -26,6 +26,14 @@ export const getCartByUserId = () => dispatch => {
     });
 };
 
+
+export const changeCartItemQty = (productId, delta /* +1 | -1 */) => {
+  return {
+    type: CHANGE_CART_ITEM_QTY,
+    payload: { productId, delta }
+  };
+};
+
 export const postCart = (productId, increase, decrease) => dispatch => {
   let userId = Auth.getUserId();
   dispatch({
@@ -97,15 +105,22 @@ export const restoreCartFromLocalStorage = () => {
     payload: cartData,
   };
 };
+export const clearCart = () => {
+  localStorage.removeItem('cart'); // Nếu bạn dùng localStorage để lưu cart
+  return {
+    type: CLEAR_CART
+  };
+};
 
 
 export const POST_CART_BEGIN = "POST_CART_BEGIN";
 export const POST_CART_SUCCESS = "POST_CART_SUCCESS";
 export const POST_CART_FAIL = "POST_CART_FAIL";
-
+export const CHANGE_CART_ITEM_QTY = "CHANGE_CART_ITEM_QTY";
 export const GET_CART_BY_USERID_BEGIN = "GET_CART_BY_USERID_BEGIN";
 export const GET_CART_BY_USERID_SUCCESS = "GET_CART_BY_USERID_SUCCESS";
 export const GET_CART_BY_USERID_FAIL = "GET_CART_BY_USERID_FAIL";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const RESTORE_CART_LOCALSTORAGE = "RESTORE_CART_LOCALSTORAGE"; 
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART"; 
+export const CLEAR_CART = "CLEAR_CART";

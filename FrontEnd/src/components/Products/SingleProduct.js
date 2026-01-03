@@ -1,45 +1,66 @@
-
-
 import React from "react";
 import jumpTo from "../../modules/Navigation";
 
+function SingleProduct({ productItem, addToBag }) {
+  if (!productItem) return null;
 
-function SingleProduct(props) {
-  const { productItem } = props;
-  console.log(productItem);
-  
+  const thumbnail =
+    productItem?.images?.find((img) => img.isThumbnail)?.imageUrl ||
+    productItem?.images?.[0]?.imageUrl ||
+    "";
+
   return (
     <div className="product-item men">
       <div
         className="product discount product_filter"
         onClick={() =>
-          jumpTo(`/trang-chu/san-pham/${productItem.productId
-}`)
+          jumpTo(`/trang-chu/san-pham/${productItem.productId}`)
         }
       >
+        {/* IMAGE */}
         <div className="product_image">
-          <img src={productItem.img1path} alt={productItem.productName} className="img-fluid" />
+          <img
+            src={thumbnail}
+            alt={productItem.title}
+            className="img-fluid"
+            style={{
+              height: "220px",
+              objectFit: "cover",
+            }}
+          />
         </div>
+
+        {/* FAVORITE */}
         <div className="favorite favorite_left">
           <i className="far fa-heart"></i>
         </div>
-        <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
-          <span>-$20</span>
-        </div>
+
+        {/* INFO */}
         <div className="product_info">
           <h6 className="product_name">
-            <div>{productItem.productName}</div>
+            <div>{productItem.title}</div>
           </h6>
+
+          {/* BRAND */}
+          <div style={{ fontSize: "12px", color: "#888" }}>
+            {productItem.brand?.name}
+          </div>
+
+          {/* PRICE */}
           <div className="product_price">
-             {productItem.price} VNĐ
-            <span>  {(parseFloat(productItem.price) + 30)} VNĐ</span>
+            {productItem.price?.toLocaleString("vi-VN")} ₫
+            <span>
+              {" "}
+              {(productItem.price + 30000).toLocaleString("vi-VN")} ₫
+            </span>
           </div>
         </div>
       </div>
+
+      {/* ADD TO CART */}
       <div
         className="red_button add_to_cart_button"
-        onClick={() => props.addToBag(productItem.productId
-)}
+        onClick={() => addToBag(productItem.productId)}
       >
         <div style={{ color: "#ffffff" }}>Thêm vào giỏ hàng</div>
       </div>

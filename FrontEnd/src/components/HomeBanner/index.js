@@ -9,7 +9,7 @@ function HomeBanner(props) {
     <Carousel>
       <Carousel.Item>
         <div
-          className="d-block w-150 main_slider"
+          className="d-block w-100 main_slider"
           style={{
             backgroundImage: `url(${BackgroundImage1})`,
           }}

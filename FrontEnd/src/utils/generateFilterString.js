@@ -3,7 +3,7 @@
 export default state => {
   let result = "";
   let order = "";
-  let department = "";
+  let brand = "";
   let range = "";
   for (let name in state) {
     // order filter
@@ -19,16 +19,16 @@ export default state => {
         order = "order=-price";
       }
     }
-    // department filter
-    if (name === "department") {
+    // brand filter
+    if (name === "brand") {
       let _base_str = "";
       if (state[name].length > 1) {
-        _base_str = "&department=";
+        _base_str = "&brand=";
       } else {
-        _base_str = "department=";
+        _base_str = "brand=";
       }
       for (let d of state[name]) {
-        department += _base_str + d.charAt(0).concat(d.slice(1).toLowerCase());
+        brand += _base_str + d.charAt(0).concat(d.slice(1).toLowerCase());
       }
     }
     // price filter
@@ -79,12 +79,11 @@ export default state => {
     }
     result += order;
   }
-  if (department) {
+  if (brand) {
     if (result) {
-      department = `&${department}`;
+      brand = `&${brand}`;
     }
-    result += department;
+    result += brand;
   }
-  // console.log(result);
   return result;
 };

@@ -13,23 +13,12 @@ export function getProductsByCategoryApi(params) {
 };
 
 
-export function searchProductApi(keySearch, p_user_name, page,rowPerPage,orderBy) {
-
-  const params = {
-    keySearch:keySearch,
-    p_user_name:p_user_name,
-    page:page,
-    rowPerPage:rowPerPage,
-    orderBy:orderBy,
-  }
-
+export function searchProductsApi(params) {
   return API({
     method: "GET",
-    url: `/api/user-side/product/searchV2?${new URLSearchParams(params)}`,
-  }).then((res) => {
-    return res.data;
-  }).catch((error) => {
-    return error;
-  });
-};
+    url: `/product/search?${new URLSearchParams(params)}`,
+  }).then(res => res.data)
+    .catch(error => error);
+}
+
 

@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
+    public Optional<Product> findById(Integer id) {
         return productRepository.findById(id);
     }
 
@@ -32,10 +32,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         productRepository.deleteById(id);
     }
-
     @Override
     public Product getProductById(Long productId) {
         return productRepository.findByProductId(productId)

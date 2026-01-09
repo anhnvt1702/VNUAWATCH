@@ -1,6 +1,5 @@
 package com.example.Backend.Controller;
 
-import com.example.Backend.DTO.ReviewRequest;
 import com.example.Backend.Entity.Review;
 import com.example.Backend.Service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +22,12 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createReview(@RequestBody ReviewRequest request) {
-        reviewService.createReview(request);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> addReview(@RequestBody Review review) {
+        try {
+            Review savedReview = reviewService.addReview(review);
+            return ResponseEntity.ok(savedReview);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
-
-
-
 }

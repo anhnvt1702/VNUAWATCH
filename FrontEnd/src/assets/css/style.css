@@ -108,6 +108,31 @@ COLOR PALETTE
   margin: 0;
   padding: 0;
 }
+.search_container {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.search_input {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  outline: none;
+  width: 220px;
+}
+
+.search_input:focus {
+  border-color: #1e90ff;
+}
+
+.search_button {
+  margin-left: -35px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   font-size: 14px;

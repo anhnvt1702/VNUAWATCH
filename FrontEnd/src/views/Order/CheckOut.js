@@ -36,7 +36,6 @@ const initOrder = {
   province: "",
   settle_Type: 0,
   phone: "",
-  method: "",
   track_Id: MD5(uuidv4().toString()).toString(),
 };
 
@@ -79,7 +78,7 @@ function CheckOut() {
       quantity: item.quantity,
       price: item.price,
       productName: item.title,
-      thumbnail: getThumbnail(item.images),
+      img1path: getThumbnail(item.images),
     }));
 
     setOrder({

@@ -2,54 +2,46 @@ package com.example.Backend.Entity;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "order_detail")
+@Table(name = "order_details")
 public class OrderDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderDetailId;
+    private Long id;
 
     private Long productId;
-    private Integer quantity;
-    private BigDecimal price;
     private String productName;
-    private String img1path;
+    private Double price;
+    private Integer quantity;
+    private String img1Data64;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Orders orders;
 
-    public Long getOrderDetailId() {
-        return orderDetailId;
+    public Long getId() {
+        return id;
     }
 
-    public void setOrderDetailId(Long orderDetailId) {
-        this.orderDetailId = orderDetailId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public Orders getOrders() {
+        return orders;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrders(Orders orders) {
+        this.orders = orders;
     }
 
-    public String getImg1path() {
-        return img1path;
+    public String getImg1Data64() {
+        return img1Data64;
     }
 
-    public void setImg1path(String img1path) {
-        this.img1path = img1path;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setImg1Data64(String img1Data64) {
+        this.img1Data64 = img1Data64;
     }
 
     public Integer getQuantity() {
@@ -60,10 +52,6 @@ public class OrderDetail {
         this.quantity = quantity;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
     public String getProductName() {
         return productName;
     }
@@ -72,7 +60,20 @@ public class OrderDetail {
         this.productName = productName;
     }
 
+    public Long getProductId() {
+        return productId;
+    }
+
     public void setProductId(Long productId) {
         this.productId = productId;
     }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+// Getters, setters
 }

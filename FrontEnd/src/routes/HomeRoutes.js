@@ -1,6 +1,7 @@
 import BaseLayout from "../layouts/BaseLayout";
 import Home from "../views/Home/HomeContainer";
 import Category from "../views/Category/Category";
+import Search from "../views/Search/Search";
 import Checkout from "views/Order/CheckOut";
 import Tracking from "views/Order/Tracking";
 import ProductDetail from "views/Product/ProductDetail";
@@ -30,6 +31,11 @@ var routes = [
     path: "/trang-chu/danh-muc/:categoryId",
     layout: BaseLayout,
     component: Category,
+  },
+    {
+    path: "/trang-chu/tim-kiem",
+    layout: BaseLayout,
+    component: Search,
   },
   {
     path: "/trang-chu/check-out",

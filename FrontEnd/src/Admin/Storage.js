@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography, Avatar } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Avatar,
+} from "@mui/material";
 import API from "myAxios/API";
 
 const AdminStorage = () => {
@@ -35,9 +44,13 @@ const AdminStorage = () => {
         <TableBody>
           {products.map((product) => (
             <TableRow key={product.productId}>
-              <TableCell>{product.productName}</TableCell>
+              <TableCell>{product.title}</TableCell>
               <TableCell>
-                <Avatar variant="square" src={product.img1path} alt={product.productName} />
+                <Avatar
+                  variant="square"
+                  src={product.images?.find((img) => img.isThumbnail)?.imageUrl}
+                  alt={product.productName}
+                />
               </TableCell>
               <TableCell>{product.price.toLocaleString()} VNĐ</TableCell>
               <TableCell>{product.stockQuantity}</TableCell>

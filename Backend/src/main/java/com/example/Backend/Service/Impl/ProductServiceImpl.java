@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findById(Integer id) {
+    public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
 
@@ -32,12 +32,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
+
     @Override
     public Product getProductById(Long productId) {
         return productRepository.findByProductId(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
+    }
+    @Override
+    public List<Product> searchProducts(String keyword, Long brandId, Long categoryId) {
+        return productRepository.searchProducts(keyword, brandId, categoryId);
     }
 }

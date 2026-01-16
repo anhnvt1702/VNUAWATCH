@@ -29,6 +29,14 @@ public class ProductController {
         }
         return ResponseEntity.ok(products);
     }
+    @GetMapping("/get-by-brand")
+    public ResponseEntity<List<Product>> getProductsByBrand(@RequestParam Long brandId) {
+        List<Product> products = productRepository.findByBrand_BrandId(brandId);
+        if (products.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(products);
+    }
     @GetMapping("/get-by-id")
     public ResponseEntity<?> getProductById(@RequestParam("p_product_id") Long productId) {
         try {
@@ -37,6 +45,20 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/storage")
+    public List<Product> getAllProductsInStock() {
+        return productService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<Product> search(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Long brandId,
+            @RequestParam(required = false) Long categoryId
+    ) {
+        return productService.searchProducts(keyword, brandId, categoryId);
     }
 }
 

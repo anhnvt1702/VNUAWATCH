@@ -16,7 +16,6 @@ public class CartItem {
 
     private int quantity;
 
-    // Optional: thêm thông tin sản phẩm nếu muốn
     private String productName;
     private double price;
     private String imgPath;

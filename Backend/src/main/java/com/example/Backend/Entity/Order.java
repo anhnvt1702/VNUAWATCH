@@ -26,14 +26,6 @@ public class Order {
     private Integer settleType;
     private String phone;
     private String trackId;
-    private int method;
-    public int getMethod() {
-        return method;
-    }
-
-    public void setMethod(int method) {
-        this.method = method;
-    }
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;

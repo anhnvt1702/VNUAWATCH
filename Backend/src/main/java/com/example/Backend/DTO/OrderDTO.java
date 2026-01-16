@@ -34,7 +34,6 @@ public class OrderDTO {
     @JsonProperty("track_Id")
     private String trackId;
     private LocalDateTime orderDate;
-    private Integer method;
     private List<OrderDetailDTO> orderDetails;
 
     public Long getOrderId() {
@@ -149,12 +148,5 @@ public class OrderDTO {
         this.totalOrderValue = totalOrderValue;
     }
 
-    public Integer getMethod() {
-        return method;
-    }
-
-    public void setMethod(Integer method) {
-        this.method = method;
-    }
 }
 

@@ -1,5 +1,6 @@
 package com.example.Backend.Service.Impl;
 
+import com.example.Backend.DTO.ReviewRequest;
 import com.example.Backend.Entity.Product;
 import com.example.Backend.Entity.Review;
 import com.example.Backend.Entity.User;
@@ -34,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Optional<Review> findById(Integer id) {
+    public Optional<Review> findById(Long id) {
         return reviewRepository.findById(id);
     }
 
@@ -44,7 +45,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         reviewRepository.deleteById(id);
     }
 
@@ -54,19 +55,20 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review addReview(Review review) {
-        // Validate product & customer tồn tại
-        Long productId = review.getProduct().getProductId();
-        Long customerId = review.getCustomer().getUserId();
+    public Review createReview(ReviewRequest request) {
 
-        Product product = productRepository.findByProductId(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Review review = new Review();
 
-        User customer = userRepository.findByUserId(customerId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        review.setProduct(
+                productRepository.getReferenceById(request.getProductId())
+        );
 
-        review.setProduct(product);
-        review.setCustomer(customer);
+        review.setCustomer(
+                userRepository.getReferenceById(request.getCustomer_Id())
+        );
+
+        review.setRating(request.getRating());
+        review.setReviewContent(request.getReview_Content());
         review.setCreatedAt(LocalDateTime.now());
 
         return reviewRepository.save(review);

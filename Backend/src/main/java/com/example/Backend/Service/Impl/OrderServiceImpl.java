@@ -1,5 +1,6 @@
 package com.example.Backend.Service.Impl;
 
+import com.example.Backend.DTO.MonthlyStatsDTO;
 import com.example.Backend.DTO.OrderDTO;
 import com.example.Backend.Entity.Order;
 import com.example.Backend.Entity.OrderDetail;
@@ -8,10 +9,14 @@ import com.example.Backend.Repository.OrderRepository;
 import com.example.Backend.Repository.ProductRepository;
 import com.example.Backend.Service.OrderService;
 import com.example.Backend.Utils.OrderMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.Backend.Entity.ProductImage;
 import com.example.Backend.Repository.ProductImageRepository;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +47,6 @@ public class OrderServiceImpl implements OrderService {
         order.setSettleType(dto.getSettleType());
         order.setPhone(dto.getPhone());
         order.setTrackId(dto.getTrackId());
-        order.setMethod(dto.getMethod());
         List<OrderDetail> orderDetails = dto.getOrderDetails().stream().map(detailDTO -> {
 
             Product product = productRepository.findByProductId(detailDTO.getProductId())
@@ -57,19 +61,12 @@ public class OrderServiceImpl implements OrderService {
             product.setStockQuantity(newQuantity);
             productRepository.save(product);
 
-            // ✅ LẤY THUMBNAIL
-            String thumbnail = productImageRepository
-                    .findFirstByProduct_ProductIdAndIsThumbnailTrue(detailDTO.getProductId())
-                    .map(ProductImage::getImageUrl)
-                    .orElse(null);
-
-            // Tạo OrderDetail
             OrderDetail detail = new OrderDetail();
             detail.setProductId(detailDTO.getProductId());
-            detail.setProductName(product.getTitle()); // an toàn hơn DTO
+            detail.setProductName(product.getTitle());
             detail.setQuantity(detailDTO.getQuantity());
             detail.setPrice(detailDTO.getPrice());
-            detail.setImg1path(thumbnail);
+            detail.setImg1path(detailDTO.getImg1path());
             detail.setOrder(order);
 
             return detail;
@@ -116,4 +113,41 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("Không tìm thấy đơn hàng với ID: " + orderId);
         }
     }
+
+    @Override
+    public List<MonthlyStatsDTO> getMonthlyStats(int year) {
+
+        List<Object[]> data = orderRepository.getMonthlyRevenueAndOrders(year);
+
+        List<MonthlyStatsDTO> result = new ArrayList<>();
+
+        for (Object[] row : data) {
+            MonthlyStatsDTO dto = new MonthlyStatsDTO();
+            dto.setMonth((Integer) row[0]);
+            dto.setRevenue((BigDecimal) row[1]);
+            dto.setOrderCount((Long) row[2]);
+            result.add(dto);
+        }
+
+        return result;
+    }
+    @Override
+    public void exportMonthlyStatsCsv(HttpServletResponse response, int year) throws IOException {
+
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=monthly_stats.csv");
+
+        List<MonthlyStatsDTO> stats = getMonthlyStats(year);
+
+        PrintWriter writer = response.getWriter();
+        writer.println("Month,Revenue,OrderCount");
+
+        for (MonthlyStatsDTO s : stats) {
+            writer.println(s.getMonth() + "," + s.getRevenue() + "," + s.getOrderCount());
+        }
+
+        writer.flush();
+        writer.close();
+    }
+
 }

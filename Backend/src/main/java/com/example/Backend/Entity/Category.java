@@ -11,10 +11,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-
     @Column(nullable = false)
     private String categoryName;
 
@@ -44,13 +40,5 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-// Getters and Setters
 }
 

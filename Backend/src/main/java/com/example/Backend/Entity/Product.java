@@ -1,7 +1,9 @@
 package com.example.Backend.Entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
@@ -12,23 +14,47 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
+    private String title;
+    private BigDecimal price;
+    private int stockQuantity;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(nullable = false)
-    private String productName;
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private WatchSpecification specification;
 
-    private String description;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductImage> images;
 
-    @Column(nullable = false)
-    private Double price;
+    public Category getCategory() {
+        return category;
+    }
 
-    private Integer stockQuantity;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-    private String img1path;
+    public Brand getBrand() {
+        return brand;
+    }
 
-    private LocalDateTime createdAt;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
 
     public Long getProductId() {
         return productId;
@@ -38,62 +64,38 @@ public class Product {
         this.productId = productId;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public List<ProductImage> getImages() {
+        return images;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
     }
 
-    public String getImg1path() {
-        return img1path;
-    }
-
-    public void setImg1path(String img1path) {
-        this.img1path = img1path;
-    }
-
-    public Integer getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(Integer stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
-
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public WatchSpecification getSpecification() {
+        return specification;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSpecification(WatchSpecification specification) {
+        this.specification = specification;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setTitle(String title) {
+        this.title = title;
     }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-// Getters and Setters
 }
+
 
 

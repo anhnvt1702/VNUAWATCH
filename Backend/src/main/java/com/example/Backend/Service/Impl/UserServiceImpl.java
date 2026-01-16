@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
@@ -67,8 +67,9 @@ public class UserServiceImpl implements UserService {
                         user.getEmail(),
                         user.getStatus(),
                         user.getAvatar(),
-                        user.getPhone());
-
+                        user.getPhone(),
+                        user.getUserId(),
+                        user.getIsAdmin());
             }
         }
 
@@ -94,6 +95,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(request.getPhone());
         user.setAvatar("https://res.cloudinary.com/dkxnkqvrp/image/upload/v1747238840/huong-dan-chon-mu-bao-hiem-tre-em-dat-chuan-6-730x420_ncgcum.jpg");
         user.setStatus("ACTIVE");
+        user.setIsAdmin(0);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
@@ -114,5 +116,20 @@ public class UserServiceImpl implements UserService {
         return userOptional.orElseThrow(() -> new RuntimeException("User không tồn tại"));
     }
 
+    @Override
+    public List<User> getAllUsers() {
+            return userRepository.findByIsAdminNot(1);
+    }
 
+    @Override
+    public void updateUser(Long id, User updatedData) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+        user.setUserName(updatedData.getUserName());
+        user.setFullName(updatedData.getFullName());
+        user.setEmail(updatedData.getEmail());
+        user.setPhone(updatedData.getPhone());
+        user.setStatus(updatedData.getStatus());
+        user.setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user);
+    }
 }
